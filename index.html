@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEM Damietta Library</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="overlay">
+    <!-- شريط التحكم العلوي (لغة + وضع مظلم) -->
+    <div class="top-controls">
+        <button id="theme-btn" onclick="toggleTheme()">🌙</button>
+        <button id="lang-btn" onclick="toggleLang()">English</button>
+    </div>
+
+    <div class="container">
+        
+        <!-- شاشة الترحيب (تظهر مرة واحدة) -->
+        <div id="welcome-section">
+            <h2 data-i18n="welcome_title">مرحباً بك في مكتبة STEM 📚</h2>
+            <p data-i18n="welcome_desc">مساحتك الخاصة للوصول للمصادر الدراسية، الروايات، وحجز الكتب الورقية بكل سهولة. هل أنت مستعد؟</p>
+            <button onclick="startApp()" class="action-btn" style="width:100%; margin-top:20px;" data-i18n="start_btn">لنبدأ رحلتنا 🚀</button>
+        </div>
+
+        <!-- المكتبة -->
+        <div id="library-section" style="display: none;">
+            <div class="header">
+                <h2 style="margin: 0; color: var(--primary-color);" data-i18n="library_title">مكتبة STEM Damietta 📚</h2>
+            </div>
+
+            <!-- التبويبات الرئيسية -->
+            <div class="main-tabs">
+                <button class="main-tab-btn active" id="tab-pdf" onclick="switchMain('pdf')" data-i18n="tab_pdf">الكتب الإلكترونية (PDF)</button>
+                <button class="main-tab-btn" id="tab-physical" onclick="switchMain('physical')" data-i18n="tab_physical">الكتب الورقية (للحجز)</button>
+            </div>
+
+            <!-- قسم الـ PDF -->
+            <div id="pdf-section">
+                <!-- التبويبات الفرعية -->
+                <div class="sub-tabs">
+                    <button class="sub-tab-btn active" id="sub-academic" onclick="switchSub('academic')" data-i18n="sub_academic">كتب دراسية</button>
+                    <button class="sub-tab-btn" id="sub-novels" onclick="switchSub('novels')" data-i18n="sub_novels">روايات عالمية</button>
+                    <button class="sub-tab-btn" id="sub-students" onclick="switchSub('students')" data-i18n="sub_students">إبداعات الطلاب</button>
+                </div>
+
+                <!-- محتوى دراسي -->
+                <div id="content-academic" class="books-grid">
+                    <div class="book-card">
+                        <h3 data-i18n="book_upstream_title">كتاب Upstream</h3>
+                        <p data-i18n="book_upstream_desc">مادة اللغة الإنجليزية</p>
+                        <a href="books/upstream.pdf" download="Upstream.pdf" class="action-btn" data-i18n="download_btn">⬇️ تحميل الكتاب</a>
+                    </div>
+                </div>
+
+                <!-- محتوى روايات -->
+                <div id="content-novels" class="books-grid" style="display:none;">
+                    <div class="book-card">
+                        <h3 data-i18n="book_utopia_title">رواية يوتوبيا</h3>
+                        <p data-i18n="book_utopia_desc">د. أحمد خالد توفيق</p>
+                        <a href="books/utopia.pdf" download="Utopia.pdf" class="action-btn" data-i18n="download_novel">⬇️ تحميل الرواية</a>
+                    </div>
+                    <div class="book-card">
+                        <h3 data-i18n="book_martian_title">رواية المريخي</h3>
+                        <p data-i18n="book_martian_desc">آندي وير</p>
+                        <a href="books/the_martian.pdf" download="The_Martian.pdf" class="action-btn" data-i18n="download_novel">⬇️ تحميل الرواية</a>
+                    </div>
+                </div>
+
+                <!-- محتوى إبداعات الطلاب -->
+                <div id="content-students" class="books-grid" style="display:none;">
+                    <!-- يمكنك إضافة كتب الطلاب هنا لاحقاً -->
+                </div>
+            </div>
+
+            <!-- قسم الكتب الورقية للحجز -->
+            <div id="physical-section" style="display: none; flex-direction: column; align-items: center;">
+                
+                <!-- زر إضافة كتاب (يظهر في المنتصف أعلى الكتب) -->
+                <button onclick="checkSecretCode()" class="action-btn" style="background-color: #28a745; width: auto; padding: 10px 20px; margin-bottom: 25px;" data-i18n="add_book_btn">➕ إضافة كتاب (لأصدقاء المكتبة)</button>
+                
+                <div id="physical-books-grid" class="books-grid" style="width: 100%;">
+                    <!-- الكتاب الأساسي -->
+                    <div class="book-card">
+                        <h3 data-i18n="book4_title">الفيزياء الجامعية</h3>
+                        <p data-i18n="book4_desc">كتاب مرجعي - متوفر 2 نسخة</p>
+                        <button class="action-btn reserve" onclick="openReserveModal('الفيزياء الجامعية', 'University Physics')" data-i18n="reserve_btn">📅 احجز الآن</button>
+                    </div>
+                    <!-- الكتب المضافة ديناميكياً ستظهر هنا -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- نافذة الحجز -->
+<div id="reservationModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeReserveModal()">&times;</span>
+        <h3 style="margin-top: 0; color: #ff9800;" data-i18n="modal_title">تأكيد حجز الكتاب</h3>
+        <p id="bookToReserve" style="font-weight: bold; color: var(--text-color);"></p>
+        
+        <form action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="f7b896c7-52d0-477a-b1bd-d836a018394f">
+            <input type="hidden" name="subject" value="New Book Reservation">
+            <input type="hidden" name="Book_Name" id="inputBookName">
+            
+            <input type="text" name="Student_Name" id="modal_name" placeholder="الاسم ثلاثي" required>
+            <select name="Grade_Class" id="modal_class" required>
+              <option value="" disabled selected data-i18n="modal_class_ph">اختر الصف والفصل</option>
+              <option value="1-A">1-A</option>
+              <option value="1-B">1-B</option>
+              <option value="1-C">1-C</option>
+              <option value="1-D">1-D</option>
+              <option value="1-E">1-E</option>
+              <option value="1-F">1-F</option>
+            </select>
+            <button type="submit" class="action-btn reserve" style="margin-top: 15px;" data-i18n="modal_submit">إرسال طلب الحجز</button>
+        </form>
+    </div>
+</div>
+
+<!-- نافذة إضافة كتاب (لأصدقاء المكتبة) -->
+<div id="addBookModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeAddBookModal()">&times;</span>
+        <h3 style="margin-top: 0; color: #28a745;" data-i18n="add_modal_title">إضافة كتاب ورقي جديد</h3>
+        <input type="text" id="newBookTitleAr" placeholder="اسم الكتاب (عربي)" required>
+        <input type="text" id="newBookTitleEn" placeholder="Book Title (English)" required>
+        <input type="text" id="newBookDescAr" placeholder="الوصف (مثال: متوفر 3 نسخ)" required>
+        <input type="text" id="newBookDescEn" placeholder="Description (e.g., 3 copies)" required>
+        <button onclick="saveNewBook()" class="action-btn" style="background: #28a745; margin-top: 15px;" data-i18n="save_book_btn">حفظ وإضافة</button>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

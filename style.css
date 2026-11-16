@@ -1,0 +1,117 @@
+/* إعدادات الألوان (الوضع العادي) */
+:root {
+    --bg-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+    --overlay-color: rgba(255, 255, 255, 0.9);
+    --bg-color: #f4f4f9;
+    --text-color: #333;
+    --card-bg: white;
+    --primary-color: #0056b3;
+    --border-color: #ddd;
+    --input-bg: white;
+    --input-text: #333;
+    --tab-bg: #e0e0e0;
+}
+
+/* إعدادات الألوان (الوضع المظلم) */
+body.dark-mode {
+    --overlay-color: rgba(20, 20, 30, 0.9);
+    --bg-color: #121212;
+    --text-color: #f1f1f1;
+    --card-bg: #1e1e2e;
+    --primary-color: #4da3ff;
+    --border-color: #333;
+    --input-bg: #2a2a3a;
+    --input-text: #fff;
+    --tab-bg: #333;
+}
+
+body {
+    font-family: Tahoma, Arial, sans-serif;
+    margin: 0; padding: 0;
+    background: var(--bg-image) no-repeat center center fixed;
+    background-size: cover;
+    color: var(--text-color);
+    transition: color 0.3s;
+}
+
+.overlay {
+    background-color: var(--overlay-color);
+    min-height: 100vh; padding: 20px;
+    transition: background-color 0.3s;
+}
+
+.container { max-width: 900px; margin: 0 auto; text-align: center; }
+
+/* شريط التحكم */
+.top-controls {
+    display: flex; justify-content: flex-end; gap: 10px; padding-bottom: 20px;
+}
+.top-controls button {
+    background: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color);
+    padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s;
+}
+
+/* الأقسام والكروت */
+#login-section {
+    background: var(--card-bg); padding: 40px; border-radius: 10px; max-width: 400px; 
+    margin: 50px auto; box-shadow: 0 8px 16px rgba(0,0,0,0.3); border-top: 5px solid var(--primary-color);
+}
+#login-section input {
+    background: var(--input-bg); color: var(--input-text);
+    padding: 12px; width: 85%; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 5px;
+}
+/* استبدل ستايلات login-section القديمة بهذا الكود */
+
+#welcome-section {
+    background: var(--card-bg); padding: 40px; border-radius: 10px; max-width: 500px; 
+    margin: 100px auto; box-shadow: 0 8px 16px rgba(0,0,0,0.3); border-top: 5px solid var(--primary-color);
+    text-align: center;
+}
+#welcome-section p { font-size: 16px; line-height: 1.6; color: var(--text-color); }
+
+.header { display: flex; justify-content: center; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 20px; margin-bottom: 20px; }
+
+/* باقي ستايلات الأزرار والأقسام كما هي */
+#error-msg { color: #ff4d4d; display: none; margin-top: 10px; font-size: 14px; }
+
+#library-section { display: none; }
+.header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 20px; margin-bottom: 20px; }
+.logout-btn { background-color: #dc3545; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer; }
+
+/* التبويبات */
+.main-tabs, .sub-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+.main-tab-btn { padding: 12px 25px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; background: var(--tab-bg); color: var(--text-color); font-weight: bold; }
+.main-tab-btn.active { background: var(--primary-color); color: white; }
+.sub-tab-btn { padding: 8px 15px; font-size: 14px; border: none; border-radius: 20px; cursor: pointer; background: var(--tab-bg); color: var(--text-color); }
+.sub-tab-btn.active { background: #28a745; color: white; }
+
+/* الكروت */
+.books-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+.book-card { 
+    background: var(--card-bg); padding: 20px; width: 250px; border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); border: 1px solid var(--border-color);
+}
+.book-card h3 { margin-top: 0; color: var(--primary-color); }
+.action-btn { 
+    display: block; padding: 10px; background-color: #007bff; color: white; 
+    text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 15px; cursor: pointer; border: none; width: 100%; box-sizing: border-box;
+}
+.action-btn.reserve { background-color: #ff9800; }
+
+/* النافذة المنبثقة */
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; }
+.modal-content { background: var(--card-bg); padding: 30px; border-radius: 10px; width: 350px; text-align: center; }
+.modal-content input { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--input-text); border-radius: 5px;}
+.close-modal { position: absolute; cursor: pointer; font-size: 20px; color: #ff4d4d; font-weight: bold; margin-bottom: 10px; }
+#reservationModal select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 16px;
+    box-sizing: border-box;
+}
